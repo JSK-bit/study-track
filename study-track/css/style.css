@@ -130,19 +130,33 @@ header {
   font-size: 13px;
   color: var(--text-secondary);
 }
-.schedule-del {
+
+/* ===== 课程操作按钮 ===== */
+.schedule-actions {
   margin-left: auto;
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.schedule-act {
   border: none;
   background: none;
   color: #c4bbb0;
   cursor: pointer;
-  padding: 4px;
-  flex-shrink: 0;
-  transition: color 0.15s;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.schedule-edit:active {
+  color: var(--accent);
+  background: rgba(232,168,56,0.1);
 }
 .schedule-del:active {
   color: #ef4444;
+  background: rgba(239,68,68,0.1);
 }
+
 
 /* ===== 计划列表 ===== */
 .plan-list { padding: 4px 0 }

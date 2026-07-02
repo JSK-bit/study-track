@@ -59,6 +59,15 @@ const db = {
         req.onsuccess = () => { resolve(); d.close(); };
         req.onerror = () => { reject(req.error); d.close(); };
       });
+    },
+    async update(data) {
+      const d = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = d.transaction('courses', 'readwrite');
+        const req = tx.objectStore('courses').put(data);
+        req.onsuccess = () => { resolve(); d.close(); };
+        req.onerror = () => { reject(req.error); d.close(); };
+      });
     }
   }
 };
