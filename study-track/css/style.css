@@ -130,6 +130,19 @@ header {
   font-size: 13px;
   color: var(--text-secondary);
 }
+.schedule-del {
+  margin-left: auto;
+  border: none;
+  background: none;
+  color: #c4bbb0;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.schedule-del:active {
+  color: #ef4444;
+}
 
 /* ===== 计划列表 ===== */
 .plan-list { padding: 4px 0 }
@@ -247,13 +260,6 @@ header {
   font-size: 11px;
   font-weight: 500;
 }
-.tab-label {
-  font-size: 11px;
-  font-weight: 500;
-}
-
-/* ===== 日期标签页 ===== */
-.day-tabs {
   display: flex;
   gap: 6px;
   margin-bottom: 12px;
@@ -280,3 +286,148 @@ header {
   background: #e8a838;
   color: #fff;
 }
+
+/* ===== 链接按钮 ===== */
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  font-family: inherit;
+}
+
+/* ===== 次要按钮 ===== */
+.btn-secondary {
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.btn-secondary:active {
+  background: var(--border);
+}
+
+/* ===== 弹窗遮罩 ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-overlay.open {
+  display: flex;
+}
+.modal-content {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 20px;
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(100%) }
+  to { transform: translateY(0) }
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.modal-close {
+  border: none;
+  background: none;
+  font-size: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+/* ===== 表单 ===== */
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
+  color: var(--text-primary);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+}
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+.form-row .form-group {
+  flex: 1;
+}
+
+/* ===== 重要度选择 ===== */
+.level-group {
+  display: flex;
+  gap: 8px;
+}
+.level-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.level-option.active {
+  border-color: var(--accent);
+  background: rgba(232,168,56,0.08);
+}
+.level-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.level-dot.t1 { background: var(--t1-1) }
+.level-dot.t2 { background: var(--t2-1) }
+.level-dot.t3 { background: var(--t3-1) }
