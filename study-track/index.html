@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#f5f0eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <title>学习印记</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-inner">
+        <h1 class="app-title">学习印记</h1>
+        <span class="header-date" id="headerDate">7月2日 周四</span>
+      </div>
+    </header>
+    <main id="view-container">
+
+      <div id="view-home" class="view active">
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">今日课程</h2>
+            <span class="section-count">3 节</span>
+          </div>
+          <div class="card schedule-list">
+            <div class="schedule-item">
+              <span class="subject-bar t1"></span>
+              <div class="subject-info">
+                <span class="subject-name">高等数学</span>
+                <span class="subject-meta">08:00 — 09:40 · 301教室</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <span class="subject-bar t2"></span>
+              <div class="subject-info">
+                <span class="subject-name">大学英语</span>
+                <span class="subject-meta">10:00 — 11:40 · 502教室</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <span class="subject-bar t3"></span>
+              <div class="subject-info">
+                <span class="subject-name">体育</span>
+                <span class="subject-meta">14:00 — 15:40 · 体育馆</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">今日计划</h2>
+            <span class="section-count">2 / 4 完成</span>
+          </div>
+          <div class="card plan-list">
+            <label class="plan-item">
+              <span class="plan-check"></span>
+              <span class="plan-text done">复习高数第二章</span>
+            </label>
+            <label class="plan-item">
+              <span class="plan-check checked"></span>
+              <span class="plan-text done">做完英语课后作业</span>
+            </label>
+            <label class="plan-item">
+              <span class="plan-check"></span>
+              <span class="plan-text">背单词 30 个</span>
+            </label>
+            <label class="plan-item">
+              <span class="plan-check"></span>
+              <span class="plan-text">预习线性代数</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <button class="btn-checkin" id="btnCheckin">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            开始今日打卡
+          </button>
+        </section>
+      </div>
+
+      <div id="view-checkin" class="view">
+        <div class="placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b8594" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <p>打卡功能开发中</p>
+        </div>
+      </div>
+
+      <div id="view-stats" class="view">
+        <div class="placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b8594" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <p>统计功能开发中</p>
+        </div>
+      </div>
+
+      <div id="view-schedule" class="view">
+        <section class="section">
+          <h2 class="section-title" style="margin-bottom:12px">本周课表</h2>
+          <div class="day-tabs" id="dayTabs"></div>
+          <div class="card schedule-list" id="fullScheduleList"></div>
+        </section>
+      </div>
+
+    </main>
+
+    <nav id="tab-bar">
+      <button class="tab-btn active" data-view="home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="tab-label">首页</span>
+      </button>
+      <button class="tab-btn" data-view="checkin">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="tab-label">打卡</span>
+      </button>
+      <button class="tab-btn" data-view="stats">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span class="tab-label">统计</span>
+      </button>
+      <button class="tab-btn" data-view="schedule">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="tab-label">课表</span>
+      </button>
+    </nav>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "学习印记",
+  "short_name": "学习印记",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f5f0eb",
+  "theme_color": "#f5f0eb",
+  "icons": []
+}

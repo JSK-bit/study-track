@@ -1,0 +1,282 @@
+/* ===== 基础重置 ===== */
+*, *::before, *::after { margin:0;padding:0;box-sizing:border-box }
+html { font-size:16px; -webkit-text-size-adjust:100% }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f0eb;
+  color: #2d2a3d;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 颜色变量 ===== */
+:root {
+  --bg-page: #f5f0eb;
+  --bg-card: #faf8f5;
+  --text-primary: #2d2a3d;
+  --text-secondary: #8b8594;
+  --border: #e8e2da;
+  --accent: #e8a838;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(45,42,61,0.06), 0 1px 2px rgba(45,42,61,0.04);
+  /* T1-T3 科目色板 */
+  --t1-1: #e74c3c; --t1-2: #e8a838; --t1-3: #7c3aed;
+  --t2-1: #4a6fa5; --t2-2: #5b9279; --t2-3: #9b72cf;
+  --t3-1: #a8c4d8; --t3-2: #e8b4b8; --t3-3: #c4b7a6;
+}
+
+/* ===== App 容器 ===== */
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ===== 顶部标题栏 ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-page);
+  padding: 12px 16px 8px;
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.app-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.header-date {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ===== 页面容器 ===== */
+#view-container {
+  flex: 1;
+  padding: 0 16px 100px;
+  overflow-y: auto;
+}
+
+/* ===== 视图切换 ===== */
+.view { display: none }
+.view.active { display: block }
+
+/* ===== 区块 ===== */
+.section { margin-bottom: 20px }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.section-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ===== 卡片 ===== */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* ===== 课表条目 ===== */
+.schedule-list { padding: 4px 0 }
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  position: relative;
+}
+.schedule-item + .schedule-item {
+  border-top: 1px solid var(--border);
+}
+.subject-bar {
+  width: 4px;
+  height: 36px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.subject-bar.t1 { background: var(--t1-1) }
+.subject-bar.t2 { background: var(--t2-1) }
+.subject-bar.t3 { background: var(--t3-1) }
+.subject-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.subject-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.subject-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ===== 计划列表 ===== */
+.plan-list { padding: 4px 0 }
+.plan-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+.plan-item + .plan-item {
+  border-top: 1px solid var(--border);
+}
+.plan-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #d4cdc3;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  position: relative;
+}
+.plan-check.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.plan-check.checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.plan-text {
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: color 0.2s;
+}
+.plan-text.done {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+/* ===== 打卡按钮 ===== */
+.btn-checkin {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(232,168,56,0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-checkin:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(232,168,56,0.2);
+}
+
+/* ===== 占位页 ===== */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* ===== 底部导航栏 ===== */
+#tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  z-index: 20;
+}
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s;
+  font-family: inherit;
+}
+.tab-btn.active {
+  color: var(--accent);
+}
+.tab-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+.tab-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ===== 日期标签页 ===== */
+.day-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.day-tabs::-webkit-scrollbar { display: none }
+.day-tab {
+  flex: 1;
+  min-width: 44px;
+  padding: 8px 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.day-tab.active {
+  background: #e8a838;
+  color: #fff;
+}
