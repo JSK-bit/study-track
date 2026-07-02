@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#4f6ef7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>Person Control</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Person Control</h1>
+      <span class="header-date" id="headerDate"></span>
+    </header>
+
+    <div id="view-container">
+      <!-- 课表视图 -->
+      <div id="view-schedule" class="view active">
+        <div class="section-title">
+          <span>课表</span>
+          <button class="btn-link" onclick="openAddCourse()">+ 添加课程</button>
+        </div>
+        <div class="schedule-controls" id="dayTabs"></div>
+        <div class="card schedule-list" id="scheduleList">
+          <div class="empty-state">
+            <div class="empty-icon">📅</div>
+            <p>还没有课程，点击右上角添加</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 计划视图 -->
+      <div id="view-plan" class="view">
+        <div class="section-title">
+          <span>今日计划</span>
+          <span style="font-size:14px;font-weight:400;color:var(--text-secondary)" id="planDate"></span>
+        </div>
+        <div class="plan-form">
+          <input type="text" id="planInput" placeholder="写一个计划..." maxlength="100">
+          <select id="planPriority">
+            <option value="medium">中</option>
+            <option value="high">高</option>
+            <option value="low">低</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="addPlan()">添加</button>
+        </div>
+        <div class="card" id="planList">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>今天还没有计划，写一个吧</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 学习视图 -->
+      <div id="view-study" class="view">
+        <div class="section-title">
+          <span>学习计时</span>
+        </div>
+        <div class="card timer-card">
+          <div class="timer-subject">
+            <select id="studySubject">
+              <option value="">选择科目...</option>
+            </select>
+          </div>
+          <div class="timer-display" id="timerDisplay">00:00:00</div>
+          <div>
+            <button class="timer-btn start" id="timerBtn" onclick="toggleTimer()">开始</button>
+          </div>
+        </div>
+        <div class="section-title" style="margin-top:16px;">
+          <span>今日记录</span>
+        </div>
+        <div class="card" id="todayRecords">
+          <div class="empty-state">
+            <div class="empty-icon">⏱️</div>
+            <p>今天还没有学习记录</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 统计视图 -->
+      <div id="view-stats" class="view">
+        <div class="section-title">
+          <span>学习统计</span>
+        </div>
+        <div class="stat-grid" id="statsGrid"></div>
+        <div class="card">
+          <div class="card-title">近30天打卡</div>
+          <div class="heatmap" id="heatmap"></div>
+          <div class="heatmap-label">
+            <span>少</span>
+            <span>多</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">本周时长 (分钟)</div>
+          <div id="weeklyChart" style="height:160px;display:flex;align-items:flex-end;gap:4px;padding:8px 0;"></div>
+        </div>
+      </div>
+    </div>
+
+    <nav id="tab-bar">
+      <button class="tab-btn active" data-view="schedule" onclick="switchView('schedule')">
+        <span class="tab-icon">📅</span>
+        <span>课表</span>
+      </button>
+      <button class="tab-btn" data-view="plan" onclick="switchView('plan')">
+        <span class="tab-icon">📋</span>
+        <span>计划</span>
+      </button>
+      <button class="tab-btn" data-view="study" onclick="switchView('study')">
+        <span class="tab-icon">⏱️</span>
+        <span>学习</span>
+      </button>
+      <button class="tab-btn" data-view="stats" onclick="switchView('stats')">
+        <span class="tab-icon">📊</span>
+        <span>统计</span>
+      </button>
+    </nav>
+
+    <!-- 添加课程弹窗 -->
+    <div class="modal-overlay" id="addCourseModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>添加课程</h3>
+          <button class="modal-close" onclick="closeAddCourse()">&times;</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="flex:2">
+            <label>课程名称</label>
+            <input type="text" id="courseName" placeholder="如：数学">
+          </div>
+          <div class="form-group">
+            <label>颜色</label>
+            <select id="courseColor">
+              <option value="0" style="color:#4f6ef7">蓝</option>
+              <option value="1" style="color:#22c55e">绿</option>
+              <option value="2" style="color:#f59e0b">黄</option>
+              <option value="3" style="color:#ef4444">红</option>
+              <option value="4" style="color:#8b5cf6">紫</option>
+              <option value="5" style="color:#06b6d4">青</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>星期</label>
+            <select id="courseDay">
+              <option value="1">周一</option>
+              <option value="2">周二</option>
+              <option value="3">周三</option>
+              <option value="4">周四</option>
+              <option value="5">周五</option>
+              <option value="6">周六</option>
+              <option value="0">周日</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>开始时间</label>
+            <input type="time" id="courseStart" value="08:00">
+          </div>
+          <div class="form-group">
+            <label>结束时间</label>
+            <input type="time" id="courseEnd" value="09:40">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>地点</label>
+            <input type="text" id="courseLocation" placeholder="如：301教室">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="saveCourse()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
