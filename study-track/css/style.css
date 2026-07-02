@@ -445,3 +445,79 @@ header {
 .level-dot.t1 { background: var(--t1-1) }
 .level-dot.t2 { background: var(--t2-1) }
 .level-dot.t3 { background: var(--t3-1) }
+
+/* ===== 打卡点阵 ===== */
+.week-dots { display:flex;gap:6px;justify-content:center;flex-wrap:wrap }
+.week-dot {
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;
+  background:var(--border);color:var(--text-secondary);
+  transition:all 0.2s;
+}
+.week-dot.checked { background:var(--accent);color:#fff; }
+
+/* ===== 打卡日历 ===== */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+.calendar-weekday {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 8px 4px;
+  font-weight: 500;
+}
+.calendar-day {
+  padding: 8px 4px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-primary);
+}
+.calendar-day.checked {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.calendar-day.today {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.calendar-day.today.checked {
+  outline: none;
+}
+.calendar-day.empty {
+  visibility: hidden;
+}
+.nav-btn {
+  border: none;
+  background: none;
+  font-size: 18px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 12px;
+  transition: color 0.15s;
+}
+.nav-btn:active {
+  color: var(--accent);
+}
+.nav-btn:active {
+  color: var(--accent);
+}
+.cal-check {
+  display: block;
+  font-size: 10px;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+#statsChart {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 400/200;
+  display: block;
+}

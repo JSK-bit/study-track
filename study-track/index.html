@@ -34,25 +34,10 @@
         <section class="section">
           <div class="section-head">
             <h2 class="section-title">今日计划</h2>
-            <span class="section-count">2 / 4 完成</span>
+            <button class="btn-link" onclick="openAddPlan()">+ 添加</button>
           </div>
-          <div class="card plan-list">
-            <label class="plan-item">
-              <span class="plan-check"></span>
-              <span class="plan-text done">复习高数第二章</span>
-            </label>
-            <label class="plan-item">
-              <span class="plan-check checked"></span>
-              <span class="plan-text done">做完英语课后作业</span>
-            </label>
-            <label class="plan-item">
-              <span class="plan-check"></span>
-              <span class="plan-text">背单词 30 个</span>
-            </label>
-            <label class="plan-item">
-              <span class="plan-check"></span>
-              <span class="plan-text">预习线性代数</span>
-            </label>
+          <div class="card plan-list" id="homePlanList">
+            <div class="placeholder" style="padding:32px 0"><p>还没有计划</p></div>
           </div>
         </section>
 
@@ -65,17 +50,135 @@
       </div>
 
       <div id="view-checkin" class="view">
-        <div class="placeholder">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b8594" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <p>打卡功能开发中</p>
-        </div>
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">今日学习</h2>
+          </div>
+          <div class="card" style="padding:24px;text-align:center">
+            <div id="sessionStatus" style="font-size:16px;font-weight:600;color:var(--text-secondary)">今日尚未学习</div>
+            <div id="sessionTimer" style="font-size:42px;font-weight:700;color:var(--accent);margin:16px 0;display:none;font-variant-numeric:tabular-nums">00:00:00</div>
+            <button class="btn-checkin" id="btnSessionAction" onclick="toggleSession()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              开始学习
+            </button>
+          </div>
+        </section>
+
+        <!-- 专注计时 -->
+        <section class="section" id="focusSection">
+          <div class="section-head">
+            <h2 class="section-title">专注计时</h2>
+          </div>
+          <div class="card" style="padding:20px">
+            <div id="focusIdle">
+              <div class="form-row" style="gap:8px">
+                <div class="form-group" style="margin:0;flex:1">
+                  <label>学习时长</label>
+                  <select id="focusDuration" style="padding:10px;font-size:14px">
+                    <option value="15">15 分钟</option>
+                    <option value="25" selected>25 分钟</option>
+                    <option value="45">45 分钟</option>
+                    <option value="60">60 分钟</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin:0;flex:1">
+                  <label>休息时长</label>
+                  <select id="breakDuration" style="padding:10px;font-size:14px">
+                    <option value="5">5 分钟</option>
+                    <option value="10" selected>10 分钟</option>
+                    <option value="15">15 分钟</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-checkin" id="btnFocusIdle" onclick="startFocus()" style="margin-top:12px">开始专注</button>
+            </div>
+            <div id="focusActive" style="display:none;text-align:center">
+              <div id="focusPhase" style="font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px">学习中</div>
+              <div id="focusCountdown" style="font-size:40px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums">25:00</div>
+              <div style="height:4px;background:var(--border);border-radius:2px;margin:12px 0;overflow:hidden">
+                <div id="focusBar" style="height:100%;width:100%;background:var(--accent);border-radius:2px;transition:width 0.5s"></div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button class="btn-secondary" id="btnFocusPause" onclick="pauseFocus()" style="flex:1;padding:10px">暂停</button>
+                <button class="btn-secondary" id="btnFocusEnd" onclick="endFocus()" style="flex:1;padding:10px;border-color:#ef4444;color:#ef4444">结束</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">今日记录</h2>
+          </div>
+          <div class="card" id="todaySessionList">
+            <div class="placeholder" style="padding:24px 0"><p>还没有学习记录</p></div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">打卡日历</h2>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <button class="nav-btn" onclick="prevMonth()">◀</button>
+              <span id="calendarTitle" style="font-weight:600;font-size:16px"></span>
+              <button class="nav-btn" onclick="nextMonth()">▶</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div style="margin-top:16px;text-align:center">
+              <span id="streakDisplay" style="font-size:32px;font-weight:700;color:var(--accent)">0</span>
+              <span style="font-size:14px;color:var(--text-secondary);margin-left:4px">天连续打卡</span>
+            </div>
+          </div>
+        </section>
       </div>
 
       <div id="view-stats" class="view">
-        <div class="placeholder">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b8594" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <p>统计功能开发中</p>
-        </div>
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">学习统计</h2>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <button class="nav-btn" onclick="prevWeek()">◀</button>
+              <div style="text-align:center">
+                <div id="weekLabel" style="font-weight:600;font-size:15px"></div>
+                <div id="weekRange" style="font-size:12px;color:var(--text-secondary);margin-top:2px"></div>
+              </div>
+              <button class="nav-btn" onclick="nextWeek()">▶</button>
+            </div>
+            <canvas id="statsChart" width="400" height="200"></canvas>
+            <div style="display:flex;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+              <div style="flex:1;text-align:center">
+                <div id="statsTotal" style="font-size:22px;font-weight:700;color:var(--accent)">0</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">本周总时</div>
+              </div>
+              <div style="flex:1;text-align:center">
+                <div id="statsAvg" style="font-size:22px;font-weight:700;color:var(--accent)">0</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">日均学习</div>
+              </div>
+              <div style="flex:1;text-align:center">
+                <div id="statsBest" style="font-size:22px;font-weight:700;color:#22c55e">0</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">单日最高</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">本周进度</h2>
+          </div>
+          <div class="card" style="padding:20px;text-align:center">
+            <div id="progressRing" style="margin:0 auto"></div>
+            <div style="margin-top:8px;font-size:13px;color:var(--text-secondary)">
+              目标: <span id="goalDisplay">600</span> 分钟/周
+              <button class="btn-link" onclick="editGoal()" style="font-size:12px">修改</button>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <button class="btn-secondary" onclick="resetWeek()" style="width:100%;border-color:#ef4444;color:#ef4444">重置到第1周</button>
+        </section>
       </div>
 
       <div id="view-schedule" class="view">
@@ -170,6 +273,33 @@
           <button class="btn-secondary" onclick="closeAddCourse()" style="flex:1">取消</button>
           <button class="btn-checkin" onclick="saveCourse()" style="flex:2">保存</button>
         </div>
+      </div>
+    </div>
+
+    <!-- 添加计划弹窗 -->
+    <div class="modal-overlay" id="addPlanModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>添加计划</h3>
+          <button class="modal-close" onclick="closeAddPlan()">✖</button>
+        </div>
+        <div class="form-group">
+          <label>计划内容</label>
+          <input type="text" id="planContent" placeholder="如：复习高数第二章" maxlength="200">
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn-secondary" onclick="closeAddPlan()" style="flex:1">取消</button>
+          <button class="btn-checkin" onclick="savePlan()" style="flex:2">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提醒弹窗 -->
+    <div class="modal-overlay" id="alertModal">
+      <div class="modal-content" style="text-align:center">
+        <div style="font-size:48px;margin:20px 0">⏰</div>
+        <div id="alertMessage" style="font-size:18px;font-weight:600;margin-bottom:20px"></div>
+        <button class="btn-checkin" onclick="closeAlertModal()">知道了</button>
       </div>
     </div>
 
